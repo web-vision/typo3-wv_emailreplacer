@@ -24,6 +24,9 @@ use \TYPO3\CMS\Frontend\ContentObject;
  */
 class ContentObjectRenderer extends ContentObject\ContentObjectRenderer
 {
+    const CONFIG = 'config';
+    const LABEL_PATH = 'spamProtectEmailAddresses_linkSubst';
+
     /**
      * Creates a href attibute for given $mailAddress.
      * The function uses spamProtectEmailAddresses and Jumpurl functionality
@@ -38,12 +41,12 @@ class ContentObjectRenderer extends ContentObject\ContentObjectRenderer
      */
     public function getMailTo($mailAddress, $linktxt, $initP = '?')
     {
-        $languageKey = $GLOBALS['TSFE']->config['config']['language'];
+        $languageKey = $GLOBALS['TSFE']->config[static::CONFIG]['language'];
         $return = parent::getMailTo($mailAddress, $linktxt, $initP);
         if (trim($linktxt) === '' || \TYPO3\CMS\Core\Utility\GeneralUtility::validEmail($linktxt)) {
-            $return[1] = $GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses_linkSubst.']['default'];
-            if (array_key_exists($languageKey, $GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses_linkSubst.'])) {
-                $return[1] = $GLOBALS['TSFE']->config['config']['spamProtectEmailAddresses_linkSubst.'][$languageKey];
+            $return[1] = $GLOBALS['TSFE']->config[static::CONFIG][static::LABEL_PATH]['default'];
+            if (array_key_exists($languageKey, $GLOBALS['TSFE']->config[static::CONFIG][static::LABEL_PATH])) {
+                $return[1] = $GLOBALS['TSFE']->config[static::CONFIG][static::LABEL_PATH][$languageKey];
             }
         }
 
